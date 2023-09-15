@@ -46,7 +46,23 @@ So instead of returning a prompt _string_, a 100% correct implementation of the 
 
 ### 2.2.1 Using the new HF transformers implementation
 
-https://huggingface.co/docs/transformers/main/en/chat_templating
+HuggingFace has [recently added a feature in their library](https://huggingface.co/docs/transformers/main/en/chat_templating).
+This allows the creators of models to specify the template as part of the tokenizer.
+_If_ the model creator has specified the template this way, then it can be easily used:
+
+```python
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
+chat = [
+  {"role": "user", "content": "Hello, how are you?"},
+  {"role": "assistant", "content": "I'm doing great. How can I help you today?"},
+  {"role": "user", "content": "I'd like to show off how chat templating works!"},
+]
+
+tokenizer.use_default_system_prompt = False
+tokenizer.apply_chat_template(chat, tokenize=False)
+```
 
 ```jinja
 {% if messages[0]['role'] == 'system' %}
