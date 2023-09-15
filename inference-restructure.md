@@ -27,3 +27,5 @@ Not sure how much it matters that this still works afterwards.
 # Some arguments for modifying inference
 
 ![image](https://github.com/tju01/lm-eval-for-chat-models/assets/70238802/ba0872dd-7366-4af3-9cb0-0aec73bcdf8f)
+
+Stolen from https://discord.com/channels/981279233835958313/1022160802632966186/1151930065576263700
