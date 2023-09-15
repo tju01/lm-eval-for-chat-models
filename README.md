@@ -2,7 +2,7 @@ This repository describes a proposal for changes in lm-evaluation-harness to int
 While lm-evaluation-harness is often used for these models, the currently implemented benchmarks are primarily designed around base models.
 
 To show what changes would be required, let's look at some of the benchmarks for chat language models first.
-Here is a list of the benchmarks that are used by the [WizardLM](https://github.com/nlpxucan/WizardLM) group for evaluating their (very good) instruction-following/finetuned models that are based on existing base models like LLaMA:
+The [WizardLM](https://github.com/nlpxucan/WizardLM) group uses the following benchmarks for evaluating their instruction-finetuned/chat language models:
 1. MT-Bench	& AlpacaEval for conversational abilities
 2. GSM8K & MATH in a zero-shot CoT setting for mathematical reasoning abilities
 3. HumanEval & MBPP for Python coding abilities
