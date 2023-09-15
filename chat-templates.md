@@ -40,10 +40,11 @@ So it would look something like `--model_args pretrained=...,chat_template=chatm
 
 ## 2.2 Implementing the chat templates
 
-There are many options for where and how chat templates can be implemented.
+The implementations of chat templates can be pretty isolated from the rest of the code and it's also possible to implement it in an external library with only a very small interface.
+The main thing that is required is basically a `apply_chat_template(chat)` method that takes in the chat conversation and outputs the prompt for the model.
 
-While the vast majority of chat models use a chat template that just involves some simple string concatenation like this, **[some models](https://huggingface.co/openchat/openchat#conversation-template) require working on a token level** due to the `tokenize(A) + tokenize(B) != tokenize(A + B)` problem.
-A correct implementation also needs to take this into account.
+One important aspect that is sometimes ignored is that **[some models](https://huggingface.co/openchat/openchat#conversation-template) require working on a token level** due to the `tokenize(A) + tokenize(B) != tokenize(A + B)` problem.
+So instead of returning a prompt _string_, a 100% correct implementation of the template would return tokens instead.
 
 ### 2.2.1 Implementation in lm-evaluation-harness itself
 
