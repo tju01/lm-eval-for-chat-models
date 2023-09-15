@@ -1,0 +1,21 @@
+# Introduction
+
+This document describes a proposal for changes in lm-evaluation-harness to integrate benchmarks for instruction-finetuned/chat language models.
+While lm-evaluation-harness is often used for these models, the currently implemented benchmarks are primarily designed around base models.
+
+I have implemented all the ideas here in [FastEval](https://github.com/FastEval/FastEval) and could contribute significantly to integrate them in lm-evaluation-harness.
+However, it would require large changes and it would be good to discuss these things in more detail first.
+
+# Overview
+
+To show what changes would be required, let's look at some of the benchmarks for chat language models first.
+Here is a list of the benchmarks that are used by the [WizardLM](https://github.com/nlpxucan/WizardLM) group for evaluating their (very good) instruction-following/finetuned models that are based on existing base models like LLaMA:
+1. MT-Bench	& AlpacaEval for conversational abilities
+2. GSM8K & MATH in a zero-shot CoT setting for mathematical reasoning abilities
+3. HumanEval & MBPP for Python coding abilities
+
+From this, we can identify the following aspects that are currently missing from lm-evaluation-harness:
+1. **Prompt templates**: All of their benchmarks prompt the language model using the corresponding [prompt template](https://github.com/FastEval/FastEval/blob/main/docs/model-type.md) that their model was fine-tuned with. This makes the evaluation closer to how the models will be used in practice.
+2. **Larger focus on zero-shot**: None of these benchmarks use a few-shot context. All of them are evaluated using a zero-shot setting. Again, this is also how the models are mostly used later in practice.
+3. **More flexible tasks**: MT-Bench in particular is very different from the existing tasks in lm-evaluation-harness. In addition to the zero-shot prompted setting, it also uses multi-turn conversations and is model-graded by GPT-4. Integrating this benchmark requires supporting a more flexible task structure.
+4. **Inference modifications**: Most of the current tasks in lm-evaluation-harness only consider a few output tokens per prompt. In contrast, these benchmarks generate a few hundred tokens. Running these benchmarks using HF transformers is very slow and the WizardLM group has also integrated vLLM in their evaluations.
