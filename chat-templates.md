@@ -1,4 +1,4 @@
-## 1.1 Overview
+## Overview
 
 Chat language models are fine-tuned with a [prompt template](https://github.com/FastEval/FastEval/blob/main/docs/model-type.md).
 This does not refer to the kind of prompt templates that can be found in a library like [PromptSource](https://github.com/bigscience-workshop/promptsource).
@@ -32,7 +32,7 @@ Thanks! Some more please, it's not enough.<|im_end|>
 While the vast majority of chat models use a prompt template that just involves some simple string concatenation like this, **[some models](https://huggingface.co/openchat/openchat#conversation-template) require working on a token level** due to the `tokenize(A) + tokenize(B) != tokenize(A + B)` problem.
 A correct implementation also needs to take this into account.
 
-## 1.2 Implementation
+## Implementation
 
 Prompt templates could be added in the following way:
 1. Add an option to specify the prompt template in the `--model_args` flag.
