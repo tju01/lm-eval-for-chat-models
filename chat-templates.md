@@ -44,7 +44,7 @@ Implement the code that maps the conversation to a prompt string or list of toke
 
 https://huggingface.co/docs/transformers/main/en/chat_templating
 
-```
+```jinja
 {% if messages[0]['role'] == 'system' %}
   {% set loop_messages = messages[1:] %}
   {% set system_message = messages[0]['content'] %}
