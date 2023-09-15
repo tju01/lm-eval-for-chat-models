@@ -1,4 +1,4 @@
-## 1. Overview
+# 1. Overview
 
 Chat language models are fine-tuned with a [chat template](https://github.com/FastEval/FastEval/blob/main/docs/model-type.md).
 This does not refer to the kind of chat templates that can be found in a library like [PromptSource](https://github.com/bigscience-workshop/promptsource).
