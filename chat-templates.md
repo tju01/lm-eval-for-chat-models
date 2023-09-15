@@ -29,9 +29,6 @@ Lorem ipsum dolor sit amet [...]<|im_end|>
 Thanks! Some more please, it's not enough.<|im_end|>
 ```
 
-While the vast majority of chat models use a chat template that just involves some simple string concatenation like this, **[some models](https://huggingface.co/openchat/openchat#conversation-template) require working on a token level** due to the `tokenize(A) + tokenize(B) != tokenize(A + B)` problem.
-A correct implementation also needs to take this into account.
-
 # 2. Implementation
 
 ## 2.1 Option for user to specify the chat template
@@ -41,6 +38,9 @@ Add an option to specify the chat template in the `--model_args` flag.
 ## 2.2 Implementing the chat templates
 
 Implement the code that maps the conversation to a prompt string or list of tokens. There are a some existing libraries, but I hadn't found one that is suitable for evaluation due to insufficient stability, correctness and system message support. The current implementations from FastEval could be moved into a separate library, but I will also look again to see if there is a good existing library for this by now.
+
+While the vast majority of chat models use a chat template that just involves some simple string concatenation like this, **[some models](https://huggingface.co/openchat/openchat#conversation-template) require working on a token level** due to the `tokenize(A) + tokenize(B) != tokenize(A + B)` problem.
+A correct implementation also needs to take this into account.
 
 https://huggingface.co/docs/transformers/main/en/chat_templating
 
