@@ -68,9 +68,16 @@ However, right now this feature is very new and I've not found a model that make
 Even for the `meta-llama/Llama-2-7b-chat-hf`, the model tokenizer itself doesn't currently specify the template and instead HF just uses the default template that HF itself implements and uses based on the _model type_.
 Other models like `OpenAssistant/codellama-13b-oasst-sft-v10` and `Open-Orca/OpenOrcaxOpenChat-Preview2-13B` also use the same template right now (I've tried it) which is actually _incorrect_ for those models since the Open-Assistant model uses ChatML while the Open-Orca model uses another custom template.
 
+This might at some point become the best option, but right now it isn't.
+
 ### 2.2.2 Using an external library
 
-FastChat
+There have been a few libraries that implement these chat templates.
+The most complete implementation is probably part of [FastChat](https://github.com/lm-sys/FastChat/blob/3149253988ee16b0945aa0a381a42a07b8a7829e/fastchat/conversation.py).
+This is a reasonable good implementation, however the main problems with it right now are:
+1. It's unstable. They sometimes make changes to existing templates.
+2. While it contains many implementations, some of them are slightly incorrect.
+3. 
 
 There are a some existing libraries, but I hadn't found one that is suitable for evaluation due to insufficient stability, correctness and system message support. The current implementations from FastEval could be moved into a separate library, but I will also look again to see if there is a good existing library for this by now.
 
