@@ -33,7 +33,10 @@ Thanks! Some more please, it's not enough.<|im_end|>
 
 ## 2.1 Option for user to specify the chat template
 
-Add an option to specify the chat template in the `--model_args` flag.
+For now, I wouldn't determine the chat template that should be used for a model automatically.
+Instead, the user should specify the template manually.
+The best place for doing this is probably as part of the `--model_args` flag.
+So it would look something like `--model_args pretrained=...,chat_template=chatml` or so.
 
 ## 2.2 Implementing the chat templates
 
