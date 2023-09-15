@@ -1,8 +1,6 @@
 # 1. Overview
 
-Chat language models are fine-tuned with a [chat template](https://github.com/FastEval/FastEval/blob/main/docs/model-type.md).
-This does not refer to the kind of chat templates that can be found in a library like [PromptSource](https://github.com/bigscience-workshop/promptsource).
-Instead, it refers to the way that a conversation between a user and an assistant is transformed to a prompt string.
+Chat language models are fine-tuned with a [chat template](https://github.com/FastEval/FastEval/blob/main/docs/model-type.md) to handle conversations between a user and an assistant.
 As an example, consider the following conversation:
 
 ```json
