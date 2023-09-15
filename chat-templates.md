@@ -64,35 +64,9 @@ tokenizer.use_default_system_prompt = False
 tokenizer.apply_chat_template(chat, tokenize=False)
 ```
 
-```jinja
-{% if messages[0]['role'] == 'system' %}
-  {% set loop_messages = messages[1:] %}
-  {% set system_message = messages[0]['content'] %}
-{% elif true == true and not '<<SYS>>' in messages[0]['content'] %}
-  {% set loop_messages = messages %}{% set system_message = 'You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\\n\\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don\\'t know the answer to a question, please don\\'t share false information.' %}
-{% else %}
-  {% set loop_messages = messages %}
-  {% set system_message = false %}
-{% endif %}
-
-{% for message in loop_messages %}
-  {% if (message['role'] == 'user') != (loop.index0 % 2 == 0) %}
-    {{ raise_exception('Conversation roles must alternate user/assistant/user/assistant/...') }}
-  {% endif %}
-  {% if loop.index0 == 0 and system_message != false %}
-    {% set content = '<<SYS>>\\n' + system_message + '\\n<</SYS>>\\n\\n' + message['content'] %}
-  {% else %}
-    {% set content = message['content'] %}
-  {% endif %}
-  {% if message['role'] == 'user' %}
-    {{ bos_token + '[INST] ' + content.strip() + ' [/INST]' }}
-  {% elif message['role'] == 'system' %}
-    {{ '<<SYS>>\\n' + content.strip() + '\\n<</SYS>>\\n\\n' }}
-  {% elif message['role'] == 'assistant' %}
-    {{ ' '  + content.strip() + ' ' + eos_token }}
-  {% endif %}
-{% endfor %}
-```
+However, right now this feature is very new and I've not found a model that makes use of this.
+Even for the `meta-llama/Llama-2-7b-chat-hf`, the model tokenizer itself doesn't currently specify the template and instead HF just uses the default template that HF itself implements and uses based on the _model type_.
+Other models like `OpenAssistant/codellama-13b-oasst-sft-v10` and `Open-Orca/OpenOrcaxOpenChat-Preview2-13B` also use the same template right now (I've tried it) which is actually _incorrect_ for those models since the Open-Assistant model uses ChatML while the Open-Orca model uses another custom template.
 
 ### 2.2.2 Using an external library
 
