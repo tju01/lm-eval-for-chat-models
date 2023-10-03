@@ -1,8 +1,8 @@
-# 4. Inference modifications
+# Proposal for inference modifications
 
 The inference code in lm-evaluation-harness needs to be modified to deal with multi-turn conversations and integrate faster inference methods like vLLM that are very important for longer text generation tasks.
 
-## 4.1 Worker processes
+## Worker processes
 
 Currently, the inference in lm-evaluation-harness is quite integrated with `torch.distributed`.
 Inside the `evaluate` function, there is code conditional on `lm.rank` for collecting the requests in the beginning, executing them on each rank and then collecting them in the end again.
@@ -21,7 +21,7 @@ In addition, it also has the following benefits that I'm not sure how to make wo
 2. **Enables data parallel for larger HF transformer models**: If HF transformers needs to be used instead of vLLM for some reason, then this approach still works even for 70B models that need to be split across GPUs. If someone has 8 GPUs, it's very easy to assign every worker 2 GPUs and run the model 4 times in data parallel mode.
 3. **Can be adapted easily for asynchronous multi-turn inference**
 
-## 4.2 Asynchronous multi-turn
+## Asynchronous multi-turn
 
 Multi-turn conversations that are required by benchmarks like MT-Bench can either be handled in a synchronous or in an asynchronous way.
 
@@ -41,7 +41,9 @@ I am currently working on agent benchmarks in FastEval that involve an interacti
 Instead, we only deal with a smaller number of conversations (environment trajectories) at once which will make this problem even worse if a synchronous architecture is used.
 For these reasons, I would highly recommend the asynchronous approach and it's also what I use in FastEval using `asyncio`.
 
-# Current inference architecture of LM-Eval
+# Specific implementation
+
+## Current inference architecture of lm-evaluation-harness
 
 Quite dependent on `torch.distributed`.
 Some places that would need to be changed to have an asynchronous worker-based approach instead:
@@ -53,9 +55,9 @@ Some places that would need to be changed to have an asynchronous worker-based a
   - There is code for collecting data on each rank there
 - Some places that use a progress bar which depends on the rank
 
-# Important things to consider
+## Important considerations
 
-## Giving model as argument instead of model path
+### Giving model as argument instead of model path
 
 lm-evaluation-harness can take both a model path as well as the model itself as an argument.
 
@@ -67,7 +69,7 @@ But it's not quite clear how to do this since the worker is another process and 
 So how to deal with this while still having an asynchronous architecture?
 Threads?
 
-## FSDP
+### FSDP
 
 lm-evaluation-harness supports FSDP.
 fasteval does not.
