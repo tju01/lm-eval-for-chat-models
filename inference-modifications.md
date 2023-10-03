@@ -53,9 +53,10 @@ The following places depend on the current inference architecture based on `torc
 
 ## 2.2 Important considerations
 
-### 2.2.1 Giving model as argument instead of model path
+### 2.2.1 Model as argument instead of model path
 
-lm-evaluation-harness can take both a model path as well as the model itself as an argument.
+One important feature that lm-evaluation-harness has that fasteval does not have is the ability to give a model as argument instead of a model path.
+Specifically, lm-evaluation-harness can be used as the `lm_eval` python package and the [`evaluate` method](https://github.com/EleutherAI/lm-evaluation-harness/blob/f2e3950be5686ff7d3c8c955fb7783a799ed5572/lm_eval/evaluator.py#L153) can be called directly with a `lm`.
 
 However, fasteval only withs with the model path.
 This is because the model is **loaded in the worker process**.
