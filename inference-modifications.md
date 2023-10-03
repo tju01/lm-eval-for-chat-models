@@ -57,11 +57,15 @@ Some places that would need to be changed to have an asynchronous worker-based a
 
 ## Giving model as argument instead of model path
 
-The inference architecture from fasteval doesn't really work directly like that.
-It needs to be modified so that a model can be given as an argument.
-FastEval doesn't support that, it only supports giving the model path and it wants to load the model in a worker process by itself.
-But if the model is given as an argument, I don't think it can be moved to a worker process...
-So how to deal with that?
+lm-evaluation-harness can take both a model path as well as the model itself as an argument.
+
+However, fasteval only withs with the model path.
+This is because the model is **loaded in the worker process**.
+
+Somehow these things need to be merged.
+But it's not quite clear how to do this since the worker is another process and I don't think moving the model across processes is possible.
+So how to deal with this while still having an asynchronous architecture?
+Threads?
 
 ## FSDP
 
