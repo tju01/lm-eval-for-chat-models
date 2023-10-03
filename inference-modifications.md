@@ -46,13 +46,10 @@ For these reasons, I would highly recommend the asynchronous approach and it's a
 ## 2.1 Current inference architecture of lm-evaluation-harness
 
 The following places depend on the current inference architecture based on `torch.distributed` and would need to be modified:
-- `evaluator.py`
-  - This is the main location where the inference happens right now
-- `models/huggingface.py`
-  - There is some code dependent on the current multi-GPU architecture there
-- `task.py`
-  - There is code for collecting data on each rank there
-- Some places that use a progress bar which depends on the rank
+1. `evaluator.py` is the main location where the inference happens right now
+2. `models/huggingface.py` contains some code dependent on the current multi-GPU architecture there
+3. `task.py` has some code for collecting data that is dependent on the rank
+4. Some places that use a progress bar depends on the rank
 
 ## 2.2 Important considerations
 
