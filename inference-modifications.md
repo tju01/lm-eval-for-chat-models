@@ -55,8 +55,8 @@ The following places depend on the current inference architecture based on `torc
 
 ### 2.2.1 Model as argument instead of model path
 
-LM-Evaluation-Harness allows calling the [`evaluate` method](https://github.com/EleutherAI/lm-evaluation-harness/blob/f2e3950be5686ff7d3c8c955fb7783a799ed5572/lm_eval/evaluator.py#L153) method directly with an `lm` instead of calling it with a model path.
-FastEval does not have an option to do this.
+In lm-evaluation-harness, it is possible to call the [`evaluate` method](https://github.com/EleutherAI/lm-evaluation-harness/blob/f2e3950be5686ff7d3c8c955fb7783a799ed5572/lm_eval/evaluator.py#L153) method directly with a `lm` python object.
+FastEval does not have an option to do this and only allows passing a model path.
 
 The problem with implementing this feature is that in a worker-based architecture, the workers are separate child processes and these child processes load the models.
 Passing a separate model from the outside isn't really possible.
