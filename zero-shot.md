@@ -1,4 +1,4 @@
-# 2. Larger focus on zero-shot
+# Larger focus on zero-shot
 
 Chat language models are mostly used in a zero-shot setting in practice.
 It is therefore important to have benchmarks that measure these capabilities.
