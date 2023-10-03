@@ -77,7 +77,7 @@ The most complete implementation is probably part of [FastChat](https://github.c
 This is a reasonable good implementation, however the main problems with it right now are:
 1. It's unstable. They sometimes make changes to existing templates.
 2. While it contains many implementations, some of them are slightly incorrect.
-3. 
+3. FastChat is too big of an dependency (though that's easy to solve).
 
 There are a some existing libraries, but I hadn't found one that is suitable for evaluation due to insufficient stability, correctness and system message support. The current implementations from FastEval could be moved into a separate library, but I will also look again to see if there is a good existing library for this by now.
 
