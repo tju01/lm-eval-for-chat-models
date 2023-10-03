@@ -1,4 +1,4 @@
-# 1. Proposal for inference modifications
+# 1 Proposal for inference modifications
 
 The inference code in lm-evaluation-harness needs to be modified to deal with multi-turn conversations and integrate faster inference methods like vLLM that are very important for longer text generation tasks.
 
@@ -41,7 +41,7 @@ I am currently working on agent benchmarks in FastEval that involve an interacti
 Instead, we only deal with a smaller number of conversations (environment trajectories) at once which will make this problem even worse if a synchronous architecture is used.
 For these reasons, I would highly recommend the asynchronous approach and it's also what I use in FastEval using `asyncio`.
 
-# 2. Specific implementation
+# 2 Specific implementation
 
 ## 2.1 Current inference architecture of lm-evaluation-harness
 
@@ -49,7 +49,7 @@ The following places depend on the current inference architecture based on `torc
 1. `evaluator.py` is the main location where the inference happens right now
 2. `models/huggingface.py` contains some code dependent on the current multi-GPU architecture there
 3. `task.py` has some code for collecting data that is dependent on the rank
-4. Some places that use a progress bar depends on the rank
+4. Some places use a progress bar that depends on the rank
 
 ## 2.2 Important considerations
 
