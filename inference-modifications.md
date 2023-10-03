@@ -1,8 +1,8 @@
-# 1 Proposal for inference modifications
+# 1. Proposal for inference modifications
 
 The inference code in lm-evaluation-harness needs to be modified to deal with multi-turn conversations and integrate faster inference methods like vLLM that are very important for longer text generation tasks.
 
-## 1.1 Worker processes
+## 1.1. Worker processes
 
 Currently, the inference in lm-evaluation-harness is quite integrated with `torch.distributed`.
 Inside the `evaluate` function, there is code conditional on `lm.rank` for collecting the requests in the beginning, executing them on each rank and then collecting them in the end again.
@@ -21,7 +21,7 @@ In addition, it also has the following benefits that I'm not sure how to make wo
 2. **Enables data parallel for larger HF transformer models**: If HF transformers needs to be used instead of vLLM for some reason, then this approach still works even for 70B models that need to be split across GPUs. If someone has 8 GPUs, it's very easy to assign every worker 2 GPUs and run the model 4 times in data parallel mode.
 3. **Can be adapted easily for asynchronous multi-turn inference**
 
-## 1.2 Asynchronous multi-turn
+## 1.2. Asynchronous multi-turn
 
 Multi-turn conversations that are required by benchmarks like MT-Bench can either be handled in a synchronous or in an asynchronous way.
 
@@ -41,9 +41,9 @@ I am currently working on agent benchmarks in FastEval that involve an interacti
 Instead, we only deal with a smaller number of conversations (environment trajectories) at once which will make this problem even worse if a synchronous architecture is used.
 For these reasons, I would highly recommend the asynchronous approach and it's also what I use in FastEval using `asyncio`.
 
-# 2 Specific implementation
+# 2. Specific implementation
 
-## 2.1 Current inference architecture of lm-evaluation-harness
+## 2.1. Current inference architecture of lm-evaluation-harness
 
 The following places depend on the current inference architecture based on `torch.distributed` and would need to be modified:
 1. `evaluator.py` is the main location where the inference happens right now
@@ -51,9 +51,9 @@ The following places depend on the current inference architecture based on `torc
 3. `task.py` has some code for collecting data that is dependent on the rank
 4. Some places use a progress bar that depends on the rank
 
-## 2.2 Important considerations
+## 2.2. Important considerations
 
-### 2.2.1 Model as argument instead of model path
+### 2.2.1. Model as argument instead of model path
 
 In lm-evaluation-harness, it is possible to call the [`evaluate` method](https://github.com/EleutherAI/lm-evaluation-harness/blob/f2e3950be5686ff7d3c8c955fb7783a799ed5572/lm_eval/evaluator.py#L153) method directly with a `lm` python object.
 FastEval does not have an option to do this and only allows passing a model path.
@@ -64,7 +64,7 @@ Passing a separate model from the outside isn't really possible.
 I'm not sure how important this feature actually is and whether it would be acceptable if this feature would be removed while modifying the inference architecture.
 I think the only case where this feature is useful is if the model should be evaluated during training (and is therefore already loaded), but I'm not sure what other tools actually makes use of this.
 
-### 2.2.2 FSDP
+### 2.2.2. FSDP
 
 Since lm-evaluation-harness is based on `torch.distributed`, it also supports FSDP which FastEval does not.
 
