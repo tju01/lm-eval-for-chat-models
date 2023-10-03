@@ -69,7 +69,9 @@ Threads?
 
 ## FSDP
 
-Not sure how much it matters that this still works afterwards.
+lm-evaluation-harness supports FSDP.
+fasteval does not.
+I'm not sure how to merge these things, i.e. make FSDP work with an inference architecture that is worker-based & asynchronous like in fasteval.
 
 # Some arguments for modifying inference
 
