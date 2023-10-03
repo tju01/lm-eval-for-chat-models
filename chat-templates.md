@@ -83,7 +83,8 @@ There are a some existing libraries, but I hadn't found one that is suitable for
 
 ### 2.2.3. Implementation in lm-evaluation-harness itself
 
-Implement the code that maps the conversation to a prompt string or list of tokens.
+The best aspect about implementing the chat templates in lm-evaluation-harness itself is reproducibility.
+However, it would also be possible to achieve that in other ways and given how chat templates are used by multiple projects more commonly, it seems better to have the implementations in an external library.
 
 ## 2.3. Adding methods for doing chat inference
 
