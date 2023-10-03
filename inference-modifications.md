@@ -66,10 +66,9 @@ I think the only case where this feature is useful is if the model should be eva
 
 ### 2.2.2 FSDP
 
-lm-evaluation-harness supports FSDP.
-fasteval does not.
-I'm not sure how to merge these things, i.e. make FSDP work with an inference architecture that is worker-based & asynchronous like in fasteval.
+Since lm-evaluation-harness is based on `torch.distributed`, it also supports FSDP which FastEval does not.
 
-I also wonder how important FSDP actually is.
-The fasteval inference works fine and I don't really see a need for FSDP because it can already mix data + model parallelism.
-But maybe I'm missing something, so it would be good to discuss this.
+It's not quite clear how important FSDP is for lm-evaluation-harness.
+Moving completely to a worker-based architecture like in FastEval would remove FSDP support.
+It would be possible to keep/add FSDP support in the workers at the cost of additional complexity.
+But it's not quite clear to me whether it's actually important, so it would be good to discuss that.
