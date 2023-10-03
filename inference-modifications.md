@@ -84,3 +84,6 @@ Data parallel evaluation can really help a lot:
 ![image](https://github.com/tju01/lm-eval-for-chat-models/assets/70238802/137c5fe0-0fe4-42c6-b73d-86f5bdb07b5a)
 
 Stolen from https://discord.com/channels/981279233835958313/1022160802632966186/1151930065576263700
+
+So even if vLLM is used, one should still combine it with data parallel evaluation.
+And vLLM itself can't do this, so I think the kind of worker-based asynchronous method proposed above is the best solution here.
