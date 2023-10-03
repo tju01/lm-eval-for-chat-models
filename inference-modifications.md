@@ -79,6 +79,8 @@ But maybe I'm missing something, so it would be good to discuss this.
 
 # Some arguments for modifying inference
 
+Data parallel evaluation can really help a lot:
+
 ![image](https://github.com/tju01/lm-eval-for-chat-models/assets/70238802/137c5fe0-0fe4-42c6-b73d-86f5bdb07b5a)
 
 Stolen from https://discord.com/channels/981279233835958313/1022160802632966186/1151930065576263700
