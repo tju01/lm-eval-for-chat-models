@@ -57,7 +57,7 @@ Some places that would need to be changed to have an asynchronous worker-based a
 
 ## 2.2 Important considerations
 
-### Giving model as argument instead of model path
+### 2.2.1 Giving model as argument instead of model path
 
 lm-evaluation-harness can take both a model path as well as the model itself as an argument.
 
@@ -69,7 +69,7 @@ But it's not quite clear how to do this since the worker is another process and 
 So how to deal with this while still having an asynchronous architecture?
 Threads?
 
-### 2.3 FSDP
+### 2.2.2 FSDP
 
 lm-evaluation-harness supports FSDP.
 fasteval does not.
