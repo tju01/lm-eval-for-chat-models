@@ -17,7 +17,7 @@ There are a number of worker processes, but the _only_ task of these workers is 
 Communication between the main process and the workers happens through `multiprocessing.Queue`.
 This approach keeps the main code simple since it only runs once and not for every rank.
 In addition, it also has the following benefits that I'm not sure how to make work with the current inference architecture based on `torch.distributed`:
-1. **Works for vLLM (+ others)**: This approach works very well with other inference methods like vLLM or text-generation-inference that are both used. Both can easily be used in combination with data parallel evaluation which is sometimes important for many GPUs & small models since the default approach of distributing the model across all GPUs is not the most optimal one here.
+1. **Works for vLLM (+ others)**: This approach works very well with other inference methods like vLLM or text-generation-inference that are both used. Both can easily be used in combination with data parallel evaluation which is sometimes important for many GPUs & small models [since the default approach of distributing the model across all GPUs is not the most optimal one here](img/why-data-parallel-is-required.png) (taken from [discord](https://discord.com/channels/981279233835958313/1022160802632966186/1151930065576263700)).
 2. **Enables data parallel for larger HF transformer models**: If HF transformers needs to be used instead of vLLM for some reason, then this approach still works even for 70B models that need to be split across GPUs. If someone has 8 GPUs, it's very easy to assign every worker 2 GPUs and run the model 4 times in data parallel mode.
 3. **Can be adapted easily for asynchronous multi-turn inference**
 
@@ -76,14 +76,3 @@ I'm not sure how to merge these things, i.e. make FSDP work with an inference ar
 I also wonder how important FSDP actually is.
 The fasteval inference works fine and I don't really see a need for FSDP because it can already mix data + model parallelism.
 But maybe I'm missing something, so it would be good to discuss this.
-
-# Why a worker-based approach?
-
-Data parallel evaluation can really help a lot:
-
-![image](https://github.com/tju01/lm-eval-for-chat-models/assets/70238802/137c5fe0-0fe4-42c6-b73d-86f5bdb07b5a)
-
-Stolen from https://discord.com/channels/981279233835958313/1022160802632966186/1151930065576263700
-
-So even if vLLM is used, one should still combine it with data parallel evaluation.
-And vLLM itself can't do this, so I think the kind of worker-based asynchronous method proposed above is the best solution here.
