@@ -77,7 +77,7 @@ I also wonder how important FSDP actually is.
 The fasteval inference works fine and I don't really see a need for FSDP because it can already mix data + model parallelism.
 But maybe I'm missing something, so it would be good to discuss this.
 
-# Some arguments for modifying inference
+# Why a worker-based approach?
 
 Data parallel evaluation can really help a lot:
 
