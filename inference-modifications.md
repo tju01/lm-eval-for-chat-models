@@ -45,8 +45,7 @@ For these reasons, I would highly recommend the asynchronous approach and it's a
 
 ## 2.1 Current inference architecture of lm-evaluation-harness
 
-Quite dependent on `torch.distributed`.
-Some places that would need to be changed to have an asynchronous worker-based approach instead:
+The following places depend on the current inference architecture based on `torch.distributed` and would need to be modified:
 - `evaluator.py`
   - This is the main location where the inference happens right now
 - `models/huggingface.py`
