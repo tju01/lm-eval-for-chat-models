@@ -55,16 +55,14 @@ The following places depend on the current inference architecture based on `torc
 
 ### 2.2.1 Model as argument instead of model path
 
-One important feature that lm-evaluation-harness has that fasteval does not have is the ability to give a model as argument instead of a model path.
-Specifically, lm-evaluation-harness can be used as the `lm_eval` python package and the [`evaluate` method](https://github.com/EleutherAI/lm-evaluation-harness/blob/f2e3950be5686ff7d3c8c955fb7783a799ed5572/lm_eval/evaluator.py#L153) can be called directly with a `lm`.
+LM-Evaluation-Harness allows calling the [`evaluate` method](https://github.com/EleutherAI/lm-evaluation-harness/blob/f2e3950be5686ff7d3c8c955fb7783a799ed5572/lm_eval/evaluator.py#L153) method directly with an `lm` instead of calling it with a model path.
+FastEval does not have an option to do this.
 
-However, fasteval only withs with the model path.
-This is because the model is **loaded in the worker process**.
+The problem with implementing this feature is that in a worker-based architecture, the workers are separate child processes and these child processes load the models.
+Passing a separate model from the outside isn't really possible.
 
-Somehow these things need to be merged.
-But it's not quite clear how to do this since the worker is another process and I don't think moving the model across processes is possible.
-So how to deal with this while still having an asynchronous architecture?
-Threads?
+I'm not sure how important this feature actually is and whether it would be acceptable if this feature would be removed while modifying the inference architecture.
+I think the only case where this feature is useful is if the model should be evaluated during training (and is therefore already loaded), but I'm not sure what other tools actually makes use of this.
 
 ### 2.2.2 FSDP
 
