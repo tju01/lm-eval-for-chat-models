@@ -73,6 +73,10 @@ lm-evaluation-harness supports FSDP.
 fasteval does not.
 I'm not sure how to merge these things, i.e. make FSDP work with an inference architecture that is worker-based & asynchronous like in fasteval.
 
+I also wonder how important FSDP actually is.
+The fasteval inference works fine and I don't really see a need for FSDP because it can already mix data + model parallelism.
+But maybe I'm missing something, so it would be good to discuss this.
+
 # Some arguments for modifying inference
 
 ![image](https://github.com/tju01/lm-eval-for-chat-models/assets/70238802/137c5fe0-0fe4-42c6-b73d-86f5bdb07b5a)
